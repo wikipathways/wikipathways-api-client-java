@@ -1,3 +1,4 @@
 .settings
 .metadata
 *.class
+examples/lib/

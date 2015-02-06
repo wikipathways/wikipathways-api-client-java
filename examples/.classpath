@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.wikipathways.client"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/com.springsource.org.jdom-1.1.0.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/httpclient-4.3.5.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/org.bridgedb.bio.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/org.bridgedb.jar"/>
+	<classpathentry kind="lib" path="/org.wikipathways.client/lib/org.pathvisio.core.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
