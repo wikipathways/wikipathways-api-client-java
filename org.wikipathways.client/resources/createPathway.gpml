@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pathway xmlns="http://pathvisio.org/GPML/2013a" Name="Webservice Test" Version="20141124" Organism="Mus musculus">
+  <Graphics BoardWidth="394.0" BoardHeight="301.0" />
+  <DataNode TextLabel="A" GraphId="f83fe" Type="GeneProduct">
+    <Graphics CenterX="98.0" CenterY="93.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" />
+    <Xref Database="BioCyc" ID="1234" />
+  </DataNode>
+  <DataNode TextLabel="B" GraphId="a17f0" Type="GeneProduct">
+    <Graphics CenterX="152.0" CenterY="200.0" Width="80.0" Height="20.0" ZOrder="32768" FontSize="10" Valign="Middle" />
+    <Xref Database="Ensembl C. elegans" ID="2342314" />
+  </DataNode>
+  <Interaction>
+    <Graphics ZOrder="12288" LineThickness="1.0">
+      <Point X="98.0" Y="103.0" GraphRef="f83fe" RelX="0.0" RelY="1.0" />
+      <Point X="152.0" Y="190.0" GraphRef="a17f0" RelX="0.0" RelY="-1.0" ArrowHead="Arrow" />
+    </Graphics>
+    <Xref Database="" ID="" />
+  </Interaction>
+  <InfoBox CenterX="0.0" CenterY="0.0" />
+  <Biopax />
+</Pathway>
+

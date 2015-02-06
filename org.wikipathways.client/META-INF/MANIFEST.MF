@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.wikipathways.client.bundle
+Bundle-SymbolicName: org.wikipathways.client.bundle
+Bundle-Version: 3.2.0
+Export-Package: org.pathvisio.wikipathways.webservice,
+ org.wikipathways.client,
+ org.wikipathways.client.utils
+Require-Bundle: org.pathvisio.core;bundle-version="3.1.1",
+ org.bridgedb;bundle-version="1.2.0",
+ org.bridgedb.bio;bundle-version="1.2.0",
+ com.springsource.org.jdom;bundle-version="1.1.0",
+ org.apache.commons.codec;bundle-version="1.6.0",
+ org.apache.commons.io;bundle-version="2.4.0",
+ org.apache.commons.logging;bundle-version="1.1.3"
