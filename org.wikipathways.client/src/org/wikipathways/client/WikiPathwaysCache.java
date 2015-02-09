@@ -51,26 +51,23 @@ public class WikiPathwaysCache
 
 	private File cacheDirectory;
 	private List<File> files;
-	private WikiPathwaysClient wpClient;
+	private URL url;
 	
 	public WikiPathwaysCache(File cacheDirectory) throws MalformedURLException {
-		this(new WikiPathwaysClient(new URL("http://webservice.wikipathways.org")), cacheDirectory);
+		this(new URL("http://webservice.wikipathways.org"), cacheDirectory);
 	}
 
-	public WikiPathwaysCache(WikiPathwaysClient wpClient, File cacheDirectory)
-	{
-		this.wpClient = wpClient;
+	public WikiPathwaysCache(URL url, File cacheDirectory) {
+		this.url = url;
 
-		if (!(cacheDirectory.exists() && cacheDirectory.isDirectory()))
-		{
+		if (!(cacheDirectory.exists() && cacheDirectory.isDirectory())) {
 			throw new IllegalArgumentException ("Illegal cache directory " + cacheDirectory);
 		}
 		this.cacheDirectory = cacheDirectory;
 		files = FileUtils.getFiles(cacheDirectory, PW_EXT, true);
 	}
 
-	public List<File> getFiles()
-	{
+	public List<File> getFiles() {
 		return files;
 	}
 
@@ -93,7 +90,7 @@ public class WikiPathwaysCache
 		Logger.log.info("Date last modified: " + df.format(d));
 
 		Logger.log.info("---[Updating new and removed pathways]---");
-		
+		WikiPathwaysClient wpClient = new WikiPathwaysClient(url);
 		List<WSPathwayInfo> pathways = Arrays.asList(wpClient.listPathways());
 			
 		// remove deleted pathways
@@ -103,6 +100,7 @@ public class WikiPathwaysCache
 		
 		Logger.log.info("---[Get Recently Changed pathways]---");
 		
+		// download recently changed pathways
 		changedFiles.addAll(processRecentChanges(pathways));
 		
 		Logger.log.info("---[Ready]---");
@@ -113,11 +111,14 @@ public class WikiPathwaysCache
 		return changedFiles;
 	}
 
+	/**
+	 * checks if a pathway is already in the cache or not
+	 * then downloads all new pathways
+	 */
 	private List<File> downloadNew(Collection<WSPathwayInfo> pathways) throws ConverterException, IOException {
 		Set<WSPathwayInfo> newPathways = new HashSet<WSPathwayInfo>();
 
-		for(WSPathwayInfo p : pathways)
-		{
+		for(WSPathwayInfo p : pathways) {
 			File f = pathwayToFile(p);
 			if(!f.exists()) {
 				newPathways.add(p);
@@ -156,11 +157,17 @@ public class WikiPathwaysCache
 	private List<File> downloadFiles (Collection<WSPathwayInfo> pathways) throws ConverterException, IOException {
 		List<File> files = new ArrayList<File>();
 
+		WikiPathwaysClient wpClient = new WikiPathwaysClient(url);
 		int i = 1;
 		for(WSPathwayInfo pwi : pathways) {
 			
+			// to make sure that there are not too many threads in one session
+			if((i % 30) == 0) {
+				wpClient = new WikiPathwaysClient(url);
+			}
+			
 			Logger.log.info("\tDownloading " + pwi.getName());
-
+			
 			File file = pathwayToFile(pwi);
 			WSPathway wsp = wpClient.getPathway(pwi.getId());
 						// write out GPML without any tests 
@@ -210,17 +217,7 @@ public class WikiPathwaysCache
 	private File getInfoFile(File pathwayFile) {
 		return new File(pathwayFile.getAbsolutePath() + "." + INFO_EXT);
 	}
-
-	//Assume that files are in the form: http://host/index.php/Pathway:{Organism}:{PathwayName}
-//	private String fileToPathwayName(File f) {
-//		String filename = f.getName(); // gpml file
-//		String pwyName = filename.substring(0, filename.length() - PW_EXT_DOT.length()); // remove the extension and the first 3 characters i.e. ACE-Inhibitor_pathway_PharmGKB
-//		//Parse the pathway name
-//		int slash = pwyName.lastIndexOf('/');
-//		pwyName = pwyName.substring(slash);
-//		return pwyName;
-//	}
-
+	
 	/**
 	 * Get the source url (that points to the pathway
 	 * on WikiPathways) for the given cache file.
