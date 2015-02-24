@@ -2,3 +2,7 @@
 .metadata
 *.class
 examples/lib/
+build/
+org.wikipathways.client.lib.jar
+org.wikipathways.client.bundle.jar
+
