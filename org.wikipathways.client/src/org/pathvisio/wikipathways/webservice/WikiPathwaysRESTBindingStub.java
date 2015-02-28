@@ -16,6 +16,7 @@
 
 package org.pathvisio.wikipathways.webservice;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.rmi.RemoteException;
@@ -258,6 +259,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 
 	@Override
 	public byte[] getPathwayAs(String fileType, String pwId, int revision) throws RemoteException {
+		InputStream instream = null;
 		try {
 			String url = baseUrl;
 			if(url.contains("webservice/webservice.php")) {
@@ -272,11 +274,19 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			HttpGet httpget = new HttpGet(url);
 			HttpResponse response = client.execute(httpget);
 			HttpEntity entity = response.getEntity();
-			InputStream instream = entity.getContent();
+			instream = entity.getContent();
 			
 			return IOUtils.toByteArray(instream);
 		} catch(Exception e) {
 			throw new RemoteException(e.getMessage(), e.getCause());
+		} finally {
+			try {
+				if(instream !=  null) {
+					instream.close();
+				}
+			} catch (Exception e) {
+					throw new RemoteException(e.getMessage(), e.getCause());
+			}
 		}
 	}
 	
