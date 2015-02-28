@@ -14,4 +14,3 @@ Be aware that update and upload functionality provide special permissions that n
 
 ### Known bugs
 - [ ] Method findUserByOrcid is currently not working 
-- [ ] Building cache has issues (gets stuck after 50-70 pathways)
