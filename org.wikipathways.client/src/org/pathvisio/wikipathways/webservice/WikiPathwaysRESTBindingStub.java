@@ -1,5 +1,5 @@
 // WikiPathways Java library,
-// Copyright 2014 WikiPathways
+// Copyright 2014-2015 WikiPathways
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package org.pathvisio.wikipathways.webservice;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.rmi.RemoteException;
@@ -135,9 +134,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			for(String c : codes) {
 				url = url + "&codes=" + c; 
 			}
-			
-			
-			
+						
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("result", WSNamespaces.NS1);
@@ -484,6 +481,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 					"&username=" + auth.getUser();
 			Document jdomDocument = Utils.connect(url, client);
 			String success = jdomDocument.getRootElement().getChild("success", WSNamespaces.NS1).getValue();
+			
 			if(success.equals("1")) {
 				return true;
 			}
@@ -530,7 +528,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 	
 	@Override
-	public boolean updatePathway(String pwId, String description, String gpml,
+	public String updatePathway(String pwId, String description, String gpml,
 			int revision, WSAuth auth) throws RemoteException {
 		try {
 			Map<String, String> map = new HashMap<String, String>();
@@ -542,15 +540,11 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			map.put("username", auth.getUser());
 			
 			String url = baseUrl + "/updatePathway";
-			String success = Utils.update(url, client, map);
-			if(success.equals("1")) {
-				return true;
-			}
+			return Utils.update(url, client, map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RemoteException(e.getMessage(), e.getCause());
 		}
-		return false;
 	}
 
 	@Override

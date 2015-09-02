@@ -1,5 +1,5 @@
 // WikiPathways Java library,
-// Copyright 2014 WikiPathways
+// Copyright 2014-2015 WikiPathways
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -222,8 +222,9 @@ public class WikiPathwaysClient {
 	 * @param pathway The updated pathway data
 	 * @param description A description of the changes
 	 * @param revision The revision these changes were based on (to prevent conflicts)
+	 * @return returns new revision of pathway
 	 */
-	public boolean updatePathway(String id, Pathway pathway, String description, int revision) throws ConverterException, RemoteException {
+	public String updatePathway(String id, Pathway pathway, String description, int revision) throws ConverterException, RemoteException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		GpmlFormat.writeToXml(pathway, out, true);
 		String gpml = out.toString();

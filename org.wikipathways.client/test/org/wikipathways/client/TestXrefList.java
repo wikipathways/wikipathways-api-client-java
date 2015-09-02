@@ -1,5 +1,5 @@
 // WikiPathways Java library,
-// Copyright 2014 WikiPathways
+// Copyright 2014-2015 WikiPathways
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bridgedb.DataSource;
+import org.bridgedb.bio.DataSourceTxt;
 
 import static org.junit.Assert.assertTrue;
 
@@ -38,16 +39,17 @@ public class TestXrefList {
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
+		DataSourceTxt.init();
 	}
 
 	@Test
 	public void test() throws RemoteException {
-		String [] res = client.getXrefList("WP1", DataSource.getBySystemCode("L"));
+		String [] res = client.getXrefList("WP1", DataSource.getExistingBySystemCode("L"));
 		List<String> list = Arrays.asList(res);
 		assertTrue(list.contains("15450"));
 		assertTrue(list.contains("17777"));
 		
-		String [] res2 = client.getXrefList("WP1", DataSource.getBySystemCode("En"));
+		String [] res2 = client.getXrefList("WP1", DataSource.getExistingBySystemCode("En"));
 		List<String> list2 = Arrays.asList(res2);
 		assertTrue(list2.contains("ENSMUSG00000032207"));
 		assertTrue(list2.contains("ENSMUSG00000028158"));

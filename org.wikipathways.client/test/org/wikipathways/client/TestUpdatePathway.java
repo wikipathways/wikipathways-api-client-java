@@ -1,5 +1,5 @@
 // WikiPathways Java library,
-// Copyright 2014 WikiPathways
+// Copyright 2014-2015 WikiPathways
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,8 +70,8 @@ public class TestUpdatePathway {
 		
 		pathway.add(pel);
 		
-		boolean success = client.updatePathway(p.getId(), pathway, "add data node test", Integer.parseInt(p.getRevision()));
-		assertTrue(success);
+		String newRevision = client.updatePathway(p.getId(), pathway, "add data node test", Integer.parseInt(p.getRevision()));
+		assertTrue(Integer.parseInt(newRevision) > Integer.parseInt(p.getRevision()));
 	}
 
 }

@@ -3,6 +3,6 @@
 *.class
 examples/lib/
 build/
-org.wikipathways.client.lib.jar
-org.wikipathways.client.bundle.jar
-
+org.wikipathways.webservice.api.lib.jar
+org.wikipathways.webservice.api.bundle.jar
+user.properties

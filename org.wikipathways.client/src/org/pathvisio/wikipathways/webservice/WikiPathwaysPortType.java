@@ -1,5 +1,5 @@
 // WikiPathways Java library,
-// Copyright 2014 WikiPathways
+// Copyright 2014-2015 WikiPathways
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface WikiPathwaysPortType extends Remote {
-    public boolean updatePathway(String pwId, String description, String gpml, int revision, WSAuth auth) throws RemoteException;
+    public String updatePathway(String pwId, String description, String gpml, int revision, WSAuth auth) throws RemoteException;
     public WSSearchResult[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException;
     public byte[] getColoredPathway(String pwId, String revision, String[] graphId, String[] color, String fileType) throws RemoteException;
     public boolean saveOntologyTag(String pwId, String term, String termId, WSAuth auth) throws RemoteException;

@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.wikipathways.client.bundle
-Bundle-SymbolicName: org.wikipathways.client.bundle
-Bundle-Version: 3.2.0
+Bundle-Name: org.wikipathways.webservice.api
+Bundle-SymbolicName: org.wikipathways.webservice.api
+Bundle-Version: 3.2.1
 Export-Package: org.pathvisio.wikipathways.webservice,
  org.wikipathways.client,
  org.wikipathways.client.utils

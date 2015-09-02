@@ -3,11 +3,11 @@
 	<property name="src.dir" value="src"/>
 	<property name="debug.mode" value="true"/>
 
-	<property name="lib.jar.name" value="org.wikipathways.client.lib.jar"/>
-	<property name="bundle.jar.name" value="org.wikipathways.client.bundle.jar"/>
+	<property name="lib.jar.name" value="org.wikipathways.webservice.api.lib.jar"/>
+	<property name="bundle.jar.name" value="org.wikipathways.webservice.api.bundle.jar"/>
 	<property name="build.dir" value="build"/>
 	
-	<property name="version" value="3.2.0"/>
+	<property name="version" value="3.2.1"/>
 	
 	<target name="prepare">
 		<delete dir="${build.dir}"/>

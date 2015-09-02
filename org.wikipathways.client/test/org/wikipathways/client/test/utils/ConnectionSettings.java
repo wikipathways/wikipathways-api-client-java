@@ -1,5 +1,5 @@
 // WikiPathways Java library,
-// Copyright 2014 WikiPathways
+// Copyright 2014-2015 WikiPathways
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,9 +22,8 @@ import org.wikipathways.client.WikiPathwaysClient;
 public class ConnectionSettings {
 
 	public static WikiPathwaysClient createClient() throws Exception {
-//		URL url = new URL("http://www.wikipathways.org/wpi/webservice/webservice.php");
-//		URL url = new URL("http://test2.wikipathways.org/wpi/webservicetest/webservice.php");
-		URL url = new URL("http://webservice.wikipathways.org");
+//		URL url = new URL("http://webservice.wikipathways.org");
+		URL url = new URL("http://rcbranch.wikipathways.org/wpi/webservicetest");
 		return new WikiPathwaysClient(url);
 	}
 }
