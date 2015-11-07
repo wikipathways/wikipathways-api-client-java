@@ -73,7 +73,7 @@
 	</target>
 	
 	<target name="test" depends="lib.jar">
-		<javac srcdir="test" debug="${debug.mode}" includes="**" destdir="${build.dir}">
+		<javac srcdir="test" debug="${debug.mode}" includes="**" destdir="${build.dir}" target="1.7">
 			<classpath>
 				<path refid="project.class.path"/>
 				<path refid="test.class.path"/>
