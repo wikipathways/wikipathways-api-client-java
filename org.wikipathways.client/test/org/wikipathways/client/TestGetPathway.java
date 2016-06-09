@@ -23,6 +23,7 @@ import java.rmi.RemoteException;
 import org.junit.Before;
 import org.junit.Test;
 import org.pathvisio.core.model.ConverterException;
+import org.pathvisio.core.model.Pathway;
 import org.pathvisio.wikipathways.webservice.WSPathway;
 import org.wikipathways.client.test.utils.ConnectionSettings;
 
@@ -53,6 +54,8 @@ public class TestGetPathway {
 		String id = "WP1";
 		int revision = 53530;
 		WSPathway p = client.getPathway(id, revision);
+		Pathway p1 = WikiPathwaysClient.toPathway(p);
+		System.out.println(p1.getDataNodeXrefs().size());
 		assertEquals("", "Mus musculus", p.getSpecies());
 		assertEquals("", "Statin Pathway", p.getName());
 		assertTrue(p.getGpml().contains("http://genmapp.org/GPML/2010a"));
