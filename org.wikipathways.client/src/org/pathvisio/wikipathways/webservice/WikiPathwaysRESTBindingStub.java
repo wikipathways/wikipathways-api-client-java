@@ -439,7 +439,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	@Override
 	public String login(String name, String pass) throws RemoteException {
 		try {
-			String url = baseUrl + "/login?name=" + name + "&pass=" + pass;
+			String url = baseUrl + "/login?name=" + URLEncoder.encode(name, "UTF-8") + "&pass=" + URLEncoder.encode(pass, "UTF-8");
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			String auth = root.getChildText("auth", WSNamespaces.NS1);
