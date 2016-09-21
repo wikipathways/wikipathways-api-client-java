@@ -28,8 +28,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -50,6 +52,7 @@ public class WikiPathwaysCache
 	static final String INFO_EXT = "info";
 
 	private File cacheDirectory;
+	private Map<String, File> id2File;
 	private List<File> files;
 	private URL url;
 	
@@ -65,6 +68,7 @@ public class WikiPathwaysCache
 		}
 		this.cacheDirectory = cacheDirectory;
 		files = FileUtils.getFiles(cacheDirectory, PW_EXT, true);
+		updateId2FileMap();
 	}
 
 	public List<File> getFiles() {
@@ -107,8 +111,20 @@ public class WikiPathwaysCache
 		Logger.log.info("Updated pathways: " + changedFiles);
 		
 		files = FileUtils.getFiles(cacheDirectory, "gpml", true);
-	
+		updateId2FileMap();
 		return changedFiles;
+	}
+	
+	private void updateId2FileMap() {
+		id2File = new HashMap<String, File>();
+		for(File f : files) {
+			try {
+				WSPathwayInfo i = getPathwayInfo(f);
+				id2File.put(i.getId(), f);
+			} catch (IOException e) {
+				Logger.log.warn("No info file available for " + f.getName());
+			}
+		}
 	}
 
 	/**
@@ -240,6 +256,13 @@ public class WikiPathwaysCache
 				prop.getProperty("Revision")
 		);
 		return pi;
+	}
+	
+	public File getPathwayGpml(String wpId) {
+		if(id2File.containsKey(wpId)) {
+			return id2File.get(wpId);
+		}
+		return null;
 	}
 
 	/**
