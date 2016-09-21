@@ -36,7 +36,7 @@
 		<javac srcdir="src"
 			   includes="**"
 			   destdir="${build.dir}"
-			   debug="${debug.mode}">
+			   debug="${debug.mode}" source="1.6" target="1.6">
 		  <classpath refid="project.class.path"/>
 		</javac>
 	</target>
