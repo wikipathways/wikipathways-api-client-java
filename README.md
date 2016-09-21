@@ -13,4 +13,3 @@ Be aware that update and upload functionality provide special permissions that n
 - [ ] detailed documentation (JavaDoc!)
 
 ### Known bugs
-- [ ] Method findUserByOrcid is currently not working 
