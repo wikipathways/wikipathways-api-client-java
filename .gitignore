@@ -6,3 +6,4 @@ build/
 org.wikipathways.webservice.api.lib.jar
 org.wikipathways.webservice.api.bundle.jar
 user.properties
+org.wikipathways.client/resources/test/

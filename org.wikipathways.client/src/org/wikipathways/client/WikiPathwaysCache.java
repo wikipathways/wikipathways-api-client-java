@@ -258,11 +258,12 @@ public class WikiPathwaysCache
 		return pi;
 	}
 	
-	public File getPathwayGpml(String wpId) {
+	public File getPathwayGpml(String wpId) throws NullPointerException {
 		if(id2File.containsKey(wpId)) {
 			return id2File.get(wpId);
+		} else {
+			throw new NullPointerException("invalid identifier - pathway not found in cache");
 		}
-		return null;
 	}
 
 	/**
