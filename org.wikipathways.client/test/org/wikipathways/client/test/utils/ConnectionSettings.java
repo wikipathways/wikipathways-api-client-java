@@ -23,7 +23,7 @@ public class ConnectionSettings {
 
 	public static WikiPathwaysClient createClient() throws Exception {
 //		URL url = new URL("http://webservice.wikipathways.org");
-		URL url = new URL("http://rcbranch.wikipathways.org/wpi/webservicetest");
+		URL url = new URL("https://rcbranch.wikipathways.org/wpi/webservicetest");
 		return new WikiPathwaysClient(url);
 	}
 }
