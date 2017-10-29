@@ -22,9 +22,8 @@ import org.wikipathways.client.WikiPathwaysClient;
 public class ConnectionSettings {
 
 	public static WikiPathwaysClient createClient() throws Exception {
-		String urlStr = System.getProperty("url", "https://rcbranch.wikipathways.org/wpi/webservicetest");
-//		URL url = new URL("http://webservice.wikipathways.org");
-		URL url = new URL(urlStr);
+		URL url = new URL("https://webservice.wikipathways.org");
+//		URL url = new URL("https://rcbranch.wikipathways.org/wpi/webservicetest");
 		return new WikiPathwaysClient(url);
 	}
 }
