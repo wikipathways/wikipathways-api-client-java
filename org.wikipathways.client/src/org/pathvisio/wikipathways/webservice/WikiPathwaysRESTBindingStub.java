@@ -59,9 +59,9 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	@Override
 	public WSSearchResult[] findInteractions(String query)
 			throws RemoteException {
+		query = query.replace(" ", "+");
+		String url = baseUrl + "/findInteractions?query=" + query;
 		try {
-			query = query.replace(" ", "+");
-			String url = baseUrl + "/findInteractions?query=" + query;
 			
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
@@ -72,16 +72,16 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return res;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSSearchResult[] findPathwaysByLiterature(String query)
 			throws RemoteException {
+		query = query.replace(" ", "+");
+		String url = baseUrl + "/findPathwaysByLiterature?query=" + query;
 		try {
-			query = query.replace(" ", "+");
-			String url = baseUrl + "/findPathwaysByLiterature?query=" + query;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("result", WSNamespaces.NS1);
@@ -91,20 +91,19 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return res;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSSearchResult[] findPathwaysByText(String query, String species) throws RemoteException {
+		query = query.replace(" ", "+");
+		String url = baseUrl + "/findPathwaysByText?query=" + query;
+		if(species != null) {
+			species = species.replace(" ", "+");
+			url = url + "&species=" + species;
+		}
 		try {
-			query = query.replace(" ", "+");
-			String url = baseUrl + "/findPathwaysByText?query=" + query;
-			if(species != null) {
-				species = species.replace(" ", "+");
-				url = url + "&species=" + species;
-			}
-			
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("result", WSNamespaces.NS1);
@@ -114,27 +113,26 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return res;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSSearchResult[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException {
+		String url = baseUrl + "/findPathwaysByXref";
+		int count = 0;
+		for(String i : ids) {
+			if(count == 0) {
+				url = url + "?ids=" + i;
+				count++;
+			} else {
+				url = url + "&ids=" + i;
+			}
+		}
+		for(String c : codes) {
+			url = url + "&codes=" + c; 
+		}
 		try {
-			String url = baseUrl + "/findPathwaysByXref";
-			int count = 0;
-			for(String i : ids) {
-				if(count == 0) {
-					url = url + "?ids=" + i;
-					count++;
-				} else {
-					url = url + "&ids=" + i;
-				}
-			}
-			for(String c : codes) {
-				url = url + "&codes=" + c; 
-			}
-						
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("result", WSNamespaces.NS1);
@@ -144,36 +142,36 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return res;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public byte[] getColoredPathway(String pwId, String revision, String[] graphId, String[] color, String fileType) throws RemoteException {
+		String url = baseUrl + "/getColoredPathway?pwId=" + pwId + "&revision=" + revision;
+		for(String g : graphId) {
+			url = url + "&graphId=" + g;
+		}
+		for(String c : color) {
+			url = url + "&color=" + c;
+		}
+		url = url + "&fileType=" + fileType;
 		try {
-			String url = baseUrl + "/getColoredPathway?pwId=" + pwId + "&revision=" + revision;
-			for(String g : graphId) {
-				url = url + "&graphId=" + g;
-			}
-			for(String c : color) {
-				url = url + "&color=" + c;
-			}
-			url = url + "&fileType=" + fileType;
 			Document jdomDocument = Utils.connect(url, client);
 			Element data = jdomDocument.getRootElement().getChild("data", WSNamespaces.NS1);
 			return Base64.decodeBase64(data.getValue());
 		} catch(Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSCurationTagHistory[] getCurationTagHistory(String pwId, String timestamp) throws RemoteException {
+		String url = baseUrl + "/getCurationTagHistory?pwId=" + pwId;
+		if(timestamp != null) {
+			url = url + "&timestamp=" + timestamp;
+		}
 		try {
-			String url = baseUrl + "/getCurationTagHistory?pwId=" + pwId;
-			if(timestamp != null) {
-				url = url + "&timestamp=" + timestamp;
-			}
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("history", WSNamespaces.NS1);
@@ -183,14 +181,14 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return hist;
 		} catch(Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSCurationTag[] getCurationTags(String pwId) throws RemoteException {
+		String url = baseUrl + "/getCurationTags?pwId=" + pwId;
 		try {
-			String url = baseUrl + "/getCurationTags?pwId=" + pwId;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("tags", WSNamespaces.NS1);
@@ -200,14 +198,14 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return tags;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSCurationTag[] getCurationTagsByName(String tagName) throws RemoteException {
+		String url = baseUrl + "/getCurationTagsByName?tagName=" + tagName;
 		try {
-			String url = baseUrl + "/getCurationTagsByName?tagName=" + tagName;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("tags", WSNamespaces.NS1);
@@ -217,14 +215,14 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return tags;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSOntologyTerm[] getOntologyTermsByPathway(String pwId) throws RemoteException {
+		String url = baseUrl + "/getOntologyTermsByPathway?pwId=" + pwId;
 		try {
-			String url = baseUrl + "/getOntologyTermsByPathway?pwId=" + pwId;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("terms", WSNamespaces.NS1);
@@ -234,40 +232,39 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return terms;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSPathway getPathway(String pwId, int revision) throws RemoteException {
+		String url = baseUrl + "/getPathway?pwId=" + pwId;
+		if(revision != 0) {
+			url = url + "&revision=" + revision;
+		}
 		try {
-			String url = baseUrl + "/getPathway?pwId=" + pwId;
-			if(revision != 0) {
-				url = url + "&revision=" + revision;
-			}
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			Element p = root.getChild("pathway", WSNamespaces.NS1);
 			return Utils.parsePathway(p);
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 
 	@Override
 	public byte[] getPathwayAs(String fileType, String pwId, int revision) throws RemoteException {
 		InputStream instream = null;
+		String url = baseUrl;
+		if(url.contains("webservice/webservice.php")) {
+			url = url.replace("webservice/webservice.php", "wpi.php");
+		} else if(url.contains("webservicetest")) {
+			url = url.replace("webservicetest/webservice.php", "wpi.php");
+		} else if(url.contains("webservice.wikipathways.org")) {
+			url = "http://www.wikipathways.org/wpi/wpi.php";
+		}
+		url = url + "?action=downloadFile&type=" + fileType + "&pwTitle=Pathway:" + pwId + "&oldid=" + revision;
 		try {
-			String url = baseUrl;
-			if(url.contains("webservice/webservice.php")) {
-				url = url.replace("webservice/webservice.php", "wpi.php");
-			} else if(url.contains("webservicetest")) {
-				url = url.replace("webservicetest/webservice.php", "wpi.php");
-			} else if(url.contains("webservice.wikipathways.org")) {
-				url = "http://www.wikipathways.org/wpi/wpi.php";
-			}
-			url = url + "?action=downloadFile&type=" + fileType + "&pwTitle=Pathway:" + pwId + "&oldid=" + revision;
-
 			HttpGet httpget = new HttpGet(url);
 			HttpResponse response = client.execute(httpget);
 			HttpEntity entity = response.getEntity();
@@ -275,23 +272,23 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			
 			return IOUtils.toByteArray(instream);
 		} catch(Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		} finally {
 			try {
 				if(instream !=  null) {
 					instream.close();
 				}
 			} catch (Exception e) {
-					throw new RemoteException(e.getMessage(), e.getCause());
+					throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 			}
 		}
 	}
 	
 	@Override
 	public WSPathwayInfo[] getPathwaysByOntologyTerm(String term) throws RemoteException {
+		term = term.replace(" ", "+");
+		String url = baseUrl + "/getPathwaysByOntologyTerm?term=" + term;
 		try {
-			term = term.replace(" ", "+");
-			String url = baseUrl + "/getPathwaysByOntologyTerm?term=" + term;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
@@ -301,14 +298,14 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return info;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSPathwayInfo[] getPathwaysByParentOntologyTerm(String term) throws RemoteException {		
+		String url = baseUrl + "/getPathwaysByParentOntologyTerm?term=" + term;
 		try {
-			String url = baseUrl + "/getPathwaysByParentOntologyTerm?term=" + term;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
@@ -318,41 +315,41 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return info;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSPathwayHistory getPathwayHistory(String pwId, String timestamp) throws RemoteException {
+		String url = baseUrl + "/getPathwayHistory?pwId=" + pwId + "&timestamp=" + timestamp;
 		try {
-			String url = baseUrl + "/getPathwayHistory?pwId=" + pwId + "&timestamp=" + timestamp;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			Element hist = root.getChild("history", WSNamespaces.NS1);
 			return Utils.parsePathwayHistory(hist);
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSPathwayInfo getPathwayInfo(String pwId) throws RemoteException {
+		String url = baseUrl + "/getPathwayInfo?pwId=" + pwId;
 		try {
-			String url = baseUrl + "/getPathwayInfo?pwId=" + pwId;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			Element p = root.getChild("pathwayInfo", WSNamespaces.NS1);
 			return Utils.parseWSPathwayInfo(p);
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSPathwayInfo[] getRecentChanges(String timestamp)
 			throws RemoteException {
+		String url = baseUrl + "/getRecentChanges?timestamp=" + timestamp;
 		try {
-			String url = baseUrl + "/getRecentChanges?timestamp=" + timestamp;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
@@ -362,27 +359,27 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return info;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public String getUserByOrcid(String orcid) throws RemoteException {
+		String url = baseUrl + "/getUserByOrcid?orcid=" + orcid;
 		try {
-			String url = baseUrl + "/getUserByOrcid?orcid=" + orcid;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			
 			return root.getChildText("Result", WSNamespaces.NS1).substring(5);
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public String[] getXrefList(String pwId, String code) throws RemoteException {
+		String url = baseUrl + "/getXrefList?pwId=" + pwId + "&code=" + code;
 		try {
-			String url = baseUrl + "/getXrefList?pwId=" + pwId + "&code=" + code;
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren();
@@ -392,14 +389,14 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return xrefs;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public String[] listOrganisms() throws RemoteException {
+		String url = baseUrl + "/listOrganisms";
 		try {
-			String url = baseUrl + "/listOrganisms";
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren();
@@ -409,20 +406,20 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return organisms;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public WSPathwayInfo[] listPathways(String organism) throws RemoteException {
+		String url = "";
+		if (organism == null) {
+			url = baseUrl + "/listPathways";
+		} else {
+			organism = organism.replace(" ", "+");
+			url = baseUrl + "/listPathways?organism=" + organism;
+		}
 		try {
-			String url = "";
-			if (organism == null) {
-				url = baseUrl + "/listPathways";
-			} else {
-				organism = organism.replace(" ", "+");
-				url = baseUrl + "/listPathways?organism=" + organism;
-			}
 			Document jdomDocument = Utils.connect(url, client);
 			Element root = jdomDocument.getRootElement();
 			List<Element> list = root.getChildren("pathways", WSNamespaces.NS1);
@@ -432,7 +429,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return info;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
@@ -448,17 +445,17 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return auth;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while logging in: " + e.getMessage(), e.getCause());
 		}
 	}
 	
 	@Override
 	public boolean removeCurationTag(String pwId, String tagName, WSAuth auth) throws RemoteException {
+		String url = baseUrl + "/removeCurationTag?pwId=" + pwId + 
+				"&tagName=" + tagName + 
+				"&auth=" + auth.getKey() + 
+				"&username=" + auth.getUser();
 		try { 
-			String url = baseUrl + "/removeCurationTag?pwId=" + pwId + 
-					"&tagName=" + tagName + 
-					"&auth=" + auth.getKey() + 
-					"&username=" + auth.getUser();
 			Document jdomDocument = Utils.connect(url, client);
 			String success = jdomDocument.getRootElement().getChild("success", WSNamespaces.NS1).getValue();
 			if(success.equals("1")) {
@@ -466,7 +463,7 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 			}
 			return false;
 		} catch (Exception e) {
-			throw new RemoteException(e.getMessage(), e.getCause());
+			throw new RemoteException("Error while processing " + url + ": " + e.getMessage(), e.getCause());
 		}
 	}
 	
