@@ -8,6 +8,20 @@ The old SOAP webservice will be discontinued in the near future (spring 2015) an
 
 Be aware that update and upload functionality provide special permissions that need to be requested before using those webservice functions. 
 
+Compile the code and run the tests with:
+
+```
+cd org.wikipathways.client
+ant test
+```
+
+If you want to use a different web service, use (for example):
+
+```
+cd org.wikipathways.client
+ant -Dwp.webserver=http://otherservice.wikipathways.org test
+```
+
 ### TODO
 - [x] set up automated testing framework on Jenkins (https://jenkins.bigcat.unimaas.nl/view/WikiPathways/job/WikiPathways%20REST%20Java%20library/)
 - [ ] detailed documentation (JavaDoc!)
