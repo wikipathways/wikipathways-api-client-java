@@ -1,15 +1,6 @@
 <?xml version="1.0"?>
 <project name="WikiPathways Java Webservice library" default="lib.jar" basedir=".">
-	<property name="src.dir" value="src"/>
-	<property name="debug.mode" value="true"/>
-
-	<property name="lib.jar.name" value="org.wikipathways.webservice.api.lib.jar"/>
-	<property name="bundle.jar.name" value="org.wikipathways.webservice.api.bundle.jar"/>
-	<property name="build.dir" value="build"/>
-	
-	<property name="version" value="3.2.3"/>
-	<property name="wp.webserver" value="https://webservice.wikipathways.org"/>
-	
+	<property file="build.properties"/>
 	<target name="prepare">
 		<delete dir="${build.dir}"/>
 		<mkdir dir="${build.dir}"/>
@@ -20,7 +11,7 @@
 		<include name="*.jar"/>
 	  </fileset>
 	</path>
-	
+
 	<path id="test.class.path">
 		<fileset dir="lib-test">
 			<include name="*.jar"/>
@@ -29,7 +20,10 @@
 
 	<target name="clean" description="Remove all intermediate files.">
 		<delete dir="${build.dir}"/>
-		<delete file="${jar.name}"/>
+		<delete file="${lib.jar.name}"/>
+		<delete>
+		  <fileset dir="${basedir}" includes="TEST-org.wikipathways.client.*.xml"/>
+		</delete>
 	</target>
 
 	<target name="compile" depends="prepare">
@@ -42,7 +36,7 @@
 		</javac>
 	</target>
 
-	<target name="lib.jar" depends="compile"> 
+	<target name="lib.jar" depends="compile">
 		<unjar src="lib/org.pathvisio.core.jar" dest="${build.dir}"/>
 		<unjar src="lib/org.bridgedb.jar" dest="${build.dir}"/>
 		<unjar src="lib/org.bridgedb.bio.jar" dest="${build.dir}"/>
@@ -72,7 +66,7 @@
 			</fileset>
 		</jar>
 	</target>
-	
+
 	<target name="test" depends="lib.jar">
 		<javac srcdir="test" debug="${debug.mode}" includes="**" destdir="${build.dir}">
 			<classpath>
