@@ -8,6 +8,7 @@
 	<property name="build.dir" value="build"/>
 	
 	<property name="version" value="3.2.3"/>
+	<property name="wp.webserver" value="https://webservice.wikipathways.org"/>
 	
 	<target name="prepare">
 		<delete dir="${build.dir}"/>
@@ -81,6 +82,7 @@
 		</javac>
 		<junit printsummary="on" haltonfailure="false" fork="true" dir=".">
 			<formatter type="xml" usefile="true"/>
+			<sysproperty key="wp.webserver" value="${wp.webserver}"/>
 			<classpath>
 				<pathelement path="${build.dir}"/>
 				<path refid="project.class.path"/>
