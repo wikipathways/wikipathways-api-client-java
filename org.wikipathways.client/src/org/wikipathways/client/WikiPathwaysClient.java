@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -223,15 +224,12 @@ public class WikiPathwaysClient {
 	 * @param description A description of the changes
 	 * @param revision The revision these changes were based on (to prevent conflicts)
 	 * @return returns new revision of pathway
+	 * @throws UnsupportedEncodingException 
 	 */
-	public String updatePathway(String id, Pathway pathway, String description, int revision) throws ConverterException, RemoteException {
+	public String updatePathway(String id, Pathway pathway, String description, int revision) throws ConverterException, RemoteException, UnsupportedEncodingException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		GpmlFormat.writeToXml(pathway, out, true);
-		String gpml = out.toString();
-//		gpml = gpml.replace("\n", "");
-//		gpml = gpml.replace(" ", "+");
-//		description = description.replace(" ", "+");
-		return port.updatePathway(id, description, gpml, revision, auth);
+		return port.updatePathway(id, description, out, revision, auth);
 	}
 
 	/**
@@ -241,12 +239,12 @@ public class WikiPathwaysClient {
 	 * @return The WSPathwayInfo object, containing the identifier and revision of the created pathway.
 	 * @throws RemoteException
 	 * @throws ConverterException
+	 * @throws UnsupportedEncodingException 
 	 */
-	public WSPathwayInfo createPathway(Pathway pathway) throws RemoteException, ConverterException {
+	public WSPathwayInfo createPathway(Pathway pathway) throws RemoteException, ConverterException, UnsupportedEncodingException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		GpmlFormat.writeToXml(pathway, out, true);
-		String gpml = out.toString();
-		return port.createPathway(gpml, auth);
+		return port.createPathway(out, auth);
 	}
 
 	/**

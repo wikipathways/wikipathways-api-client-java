@@ -16,6 +16,7 @@
 
 package org.pathvisio.wikipathways.webservice;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.rmi.RemoteException;
@@ -525,13 +526,12 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 	
 	@Override
-	public String updatePathway(String pwId, String description, String gpml,
-			int revision, WSAuth auth) throws RemoteException {
+	public String updatePathway(String pwId, String description, ByteArrayOutputStream gpml, int revision, WSAuth auth) throws RemoteException {
 		try {
 			Map<String, String> map = new HashMap<String, String>();
 			map.put("pwId", pwId);
 			map.put("description", description);
-			map.put("gpml", gpml);
+			map.put("gpml", gpml.toString("UTF-8"));
 			map.put("revision", revision+"");
 			map.put("auth", auth.getKey());
 			map.put("username", auth.getUser());
@@ -545,11 +545,11 @@ public class WikiPathwaysRESTBindingStub implements WikiPathwaysPortType {
 	}
 
 	@Override
-	public WSPathwayInfo createPathway(String gpml, WSAuth auth)
+	public WSPathwayInfo createPathway(ByteArrayOutputStream gpml, WSAuth auth)
 			throws RemoteException {
 		try {
 			Map<String, String> map = new HashMap<String, String>();
-			map.put("gpml", gpml);
+			map.put("gpml", gpml.toString("UTF-8"));
 			map.put("auth", auth.getKey());
 			map.put("username", auth.getUser());
 			

@@ -18,6 +18,7 @@ package org.wikipathways.client;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 
 import org.junit.After;
@@ -48,7 +49,7 @@ public class TestCreatePathway {
 	}
 
 	@Test
-	public void test() throws RemoteException, ConverterException {
+	public void test() throws RemoteException, ConverterException, UnsupportedEncodingException {
 		client.login(props.getProperty("username"), props.getProperty("password"));
 		
 		Pathway p = new Pathway();

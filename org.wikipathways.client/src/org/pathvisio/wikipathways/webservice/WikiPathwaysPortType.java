@@ -15,11 +15,12 @@
 //
 package org.pathvisio.wikipathways.webservice;
 
+import java.io.ByteArrayOutputStream;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface WikiPathwaysPortType extends Remote {
-    public String updatePathway(String pwId, String description, String gpml, int revision, WSAuth auth) throws RemoteException;
+    public String updatePathway(String pwId, String description, ByteArrayOutputStream gpml, int revision, WSAuth auth) throws RemoteException;
     public WSSearchResult[] findPathwaysByXref(String[] ids, String[] codes) throws RemoteException;
     public byte[] getColoredPathway(String pwId, String revision, String[] graphId, String[] color, String fileType) throws RemoteException;
     public boolean saveOntologyTag(String pwId, String term, String termId, WSAuth auth) throws RemoteException;
@@ -34,7 +35,7 @@ public interface WikiPathwaysPortType extends Remote {
     public WSPathwayHistory getPathwayHistory(String pwId, String timestamp) throws RemoteException;
     public String[] getXrefList(String pwId, String code) throws RemoteException;
     public WSSearchResult[] findPathwaysByText(String query, String species) throws RemoteException;
-    public WSPathwayInfo createPathway(String gpml, WSAuth auth) throws RemoteException;
+    public WSPathwayInfo createPathway(ByteArrayOutputStream gpml, WSAuth auth) throws RemoteException;
     public byte[] getPathwayAs(String fileType, String pwId, int revision) throws RemoteException;
     public WSCurationTagHistory[] getCurationTagHistory(String pwId, String timestamp) throws RemoteException;
     public WSCurationTag[] getCurationTags(String pwId) throws RemoteException;
