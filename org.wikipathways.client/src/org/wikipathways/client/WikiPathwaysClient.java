@@ -28,7 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.http.HttpHost;
 import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.bridgedb.DataSource;
 import org.bridgedb.Xref;
@@ -69,6 +72,21 @@ public class WikiPathwaysClient {
 	public WikiPathwaysClient(URL portAddress) {
 		MIMShapes.registerShapes();
 		
+		HttpClientBuilder builder = HttpClientBuilder.create();
+		String proxyString = System.getenv("http_proxy");
+		try {
+			if (proxyString != null) {
+				URL proxyURL = new URL(proxyString);
+				HttpHost proxy = new HttpHost(proxyURL.getHost(), proxyURL.getPort());
+				builder.setProxy(proxy);
+			}
+			builder.setConnectionManagerShared(false);
+			try (CloseableHttpClient httpclient = builder.build()) {
+				port = new WikiPathwaysRESTBindingStub(httpclient, portAddress.toString());
+			}
+		} catch (Exception exception) {
+			System.out.println("ERROR while creating a HTTP client: " + exception.getMessage());
+		}
 		HttpClient httpclient = HttpClients.createDefault();
 		port = new WikiPathwaysRESTBindingStub(httpclient, portAddress.toString());
 	}
