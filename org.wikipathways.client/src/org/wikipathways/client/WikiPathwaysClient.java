@@ -80,7 +80,7 @@ public class WikiPathwaysClient {
 				HttpHost proxy = new HttpHost(proxyURL.getHost(), proxyURL.getPort());
 				builder.setProxy(proxy);
 			}
-			builder.setConnectionManagerShared(false);
+			builder.setConnectionManagerShared(true);
 			try (CloseableHttpClient httpclient = builder.build()) {
 				port = new WikiPathwaysRESTBindingStub(httpclient, portAddress.toString());
 			}
