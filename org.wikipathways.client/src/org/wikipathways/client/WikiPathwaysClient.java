@@ -87,8 +87,6 @@ public class WikiPathwaysClient {
 		} catch (Exception exception) {
 			System.out.println("ERROR while creating a HTTP client: " + exception.getMessage());
 		}
-		HttpClient httpclient = HttpClients.createDefault();
-		port = new WikiPathwaysRESTBindingStub(httpclient, portAddress.toString());
 	}
 
 	/**
