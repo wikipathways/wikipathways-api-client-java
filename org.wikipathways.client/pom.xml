@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.wikipathways</groupId>
+    <artifactId>webservice.api.lib</artifactId>
+    <version>3.3.0</version>
+
+    <name>Java library for WikiPathways webservice</name>
+    <packaging>bundle</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.4.0</version>
+            <scope>test</scope>
+        </dependency>
+	    <dependency> 
+            <groupId>org.bridgedb</groupId> 
+            <artifactId>org.bridgedb.bio</artifactId> 
+           <version>3.0.1</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom-legacy</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <dependency>
+            <!-- You also need PathVisio Core which is not yet available as Maven package, but can be install like this:
+        
+                git clone https://github.com/PathVisio/pathvisio.git
+                cd pathvisio
+                git checkout -b series/3.3.0 v3.3.0
+                ant clean core.jar
+                mvn install:install-file -Dfile=modules/org.pathvisio.core.jar -DgroupId=org.pathvisio \
+                    -DartifactId=pathvisio-core -Dversion=3.4.0 -Dpackaging=jar
+            -->
+            <groupId>org.pathvisio</groupId>
+            <artifactId>pathvisio-core</artifactId>
+            <version>3.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/</sourceDirectory>
+        <testSourceDirectory>test/</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>4.2.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Name>org.wikipathways.webservice.api</Bundle-Name>
+                        <Bundle-SymbolicName>org.wikipathways.webservice.api</Bundle-SymbolicName>
+                        <Bundle-Version>3.3.0</Bundle-Version>
+                        <Export-Package>org.pathvisio.wikipathways.webservice,org.wikipathways.client, org.wikipathways.client.utils}</Export-Package>
+                        <Require-Bundle>org.pathvisio.core;bundle-version="3.3.0",org.bridgedb,org.bridgedb.bio,com.springsource.org.jdom;bundle-version="1.1.0",org.apache.commons.codec;bundle-version="1.6.0",org.apache.commons.io;bundle-version="2.4.0",org.apache.commons.logging;bundle-version="1.1.3"</Require-Bundle>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>3.0.0-M5</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
