@@ -74,6 +74,7 @@
             </resource>
         </resources>
         <plugins>
+            <!-- Generates the OSGi metadata based on the osgi.bnd file. -->
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
