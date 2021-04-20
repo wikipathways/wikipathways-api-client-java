@@ -12,18 +12,26 @@ Compile the code and run the tests with:
 
 ```
 cd org.wikipathways.client
-ant test
+mvn clean install
 ```
 
 If you want to use a different web service, use (for example):
 
 ```
 cd org.wikipathways.client
-ant -Dwp.webserver=http://otherservice.wikipathways.org test
+mvn -Dwp.webserver=http://otherservice.wikipathways.org clean test
 ```
 
-### TODO
+## OSGi bundle
+
+Create the OSGi bundle with:
+
+```
+cd org.wikipathways.client
+mvn bundle:bundle
+```
+
+## TODO
 - [x] set up automated testing framework on Jenkins (https://jenkins.bigcat.unimaas.nl/view/WikiPathways/job/WikiPathways%20REST%20Java%20library/)
 - [ ] detailed documentation (JavaDoc!)
 
-### Known bugs
