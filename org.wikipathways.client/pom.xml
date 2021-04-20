@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wikipathways</groupId>
     <artifactId>webservice.api.lib</artifactId>
-    <version>3.3.0-GPMLRDF</version>
+    <version>3.3.0-GPMLRDF-1</version>
 
     <name>Java library for WikiPathways webservice</name>
     <packaging>bundle</packaging>
@@ -56,7 +56,7 @@
             -->
             <groupId>org.pathvisio</groupId>
             <artifactId>pathvisio-core</artifactId>
-            <version>3.4.0-bridgedb-3.0.1</version>
+            <version>3.4.0-bridgedb-3.0.1-1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
