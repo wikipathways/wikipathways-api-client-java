@@ -41,7 +41,7 @@ public class TestGetPathwayInfo {
 	public void test() throws RemoteException {
 		WSPathwayInfo info = client.getPathwayInfo("WP4");
 			
-		assertEquals("Sandbox Pathway", info.getName());
+		assertEquals("Sandbox pathway test", info.getName());
 		assertEquals("Homo sapiens", info.getSpecies());
 	}
 
