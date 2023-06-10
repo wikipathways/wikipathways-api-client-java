@@ -46,7 +46,7 @@ public class TestGetPathway {
 		String id = "WP1";
 		WSPathway p = client.getPathway(id);
 		assertEquals("", "Mus musculus", p.getSpecies());
-		assertEquals("", "Statin Pathway", p.getName());
+		assertEquals("", "Statin pathway", p.getName());
 	}
 	
 	@Test
@@ -57,7 +57,7 @@ public class TestGetPathway {
 		Pathway p1 = WikiPathwaysClient.toPathway(p);
 		System.out.println(p1.getDataNodeXrefs().size());
 		assertEquals("", "Mus musculus", p.getSpecies());
-		assertEquals("", "Statin Pathway", p.getName());
+		assertEquals("", "Statin pathway", p.getName());
 		assertTrue(p.getGpml().contains("http://genmapp.org/GPML/2010a"));
 	}
 
