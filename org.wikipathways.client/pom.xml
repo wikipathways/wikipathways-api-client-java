@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wikipathways</groupId>
     <artifactId>webservice.api.lib</artifactId>
-    <version>3.3.0-GPMLRDF-2</version>
+    <version>3.3.0-GPMLRDF-3</version>
 
     <name>Java library for WikiPathways webservice</name>
     <packaging>bundle</packaging>
@@ -49,14 +49,14 @@
 
                 git clone https://github.com/egonw/pathvisio-1.git
                 cd pathvisio
-                git checkout -b bridgedb/version3 bridgedb/version3
+                git checkout -b patch/bridgedb3.0.21 origin/patch/bridgedb3.0.21
                 ant clean core.jar
                 mvn install:install-file -Dfile=modules/org.pathvisio.core.jar -DgroupId=org.pathvisio \
-                    -DartifactId=pathvisio-core -Dversion=3.4.0-bridgedb-3.0.1 -Dpackaging=jar
+                    -DartifactId=pathvisio-core -Dversion=3.4.0-bridgedb-3.0.22-1 -Dpackaging=jar
             -->
             <groupId>org.pathvisio</groupId>
             <artifactId>pathvisio-core</artifactId>
-            <version>3.4.0-bridgedb-3.0.21-1</version>
+            <version>3.4.0-bridgedb-3.0.22-1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
