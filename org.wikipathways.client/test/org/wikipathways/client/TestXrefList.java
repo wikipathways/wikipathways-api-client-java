@@ -39,7 +39,7 @@ public class TestXrefList {
 	@Before
 	public void setUp() throws Exception {
 		client = ConnectionSettings.createClient();
-		DataSourceTxt.init();
+		if (!DataSource.systemCodeExists("S")) DataSourceTxt.init();
 	}
 
 	@Test
