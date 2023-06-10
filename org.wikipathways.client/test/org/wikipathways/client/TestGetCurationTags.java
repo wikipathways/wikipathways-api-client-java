@@ -44,7 +44,7 @@ public class TestGetCurationTags {
 		// has tutorial pathway tag?
 		boolean tutorial = false;
 		for(WSCurationTag tag : tags) {
-			if(tag.getDisplayName().equals("Tutorial pathway")) {
+			if(tag.getDisplayName().equals("Test pathway")) {
 				tutorial = true;
 			}
 		}
