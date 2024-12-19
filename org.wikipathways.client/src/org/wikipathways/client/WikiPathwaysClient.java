@@ -29,10 +29,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.http.HttpHost;
-import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
 import org.bridgedb.DataSource;
 import org.bridgedb.Xref;
 import org.bridgedb.bio.Organism;

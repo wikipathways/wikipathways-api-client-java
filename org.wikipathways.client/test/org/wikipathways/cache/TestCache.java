@@ -22,7 +22,9 @@ public class TestCache {
 		
 		// setting up a new cache will take quite some time!!
 		// change to existing cache directory if you already have one
-		WikiPathwaysCache cache = new WikiPathwaysCache(new File("cache"));
+		File dir = new File("cache");
+		dir.mkdir();
+		WikiPathwaysCache cache = new WikiPathwaysCache(dir);
 		cache.update();
 		
 		File f = cache.getPathwayGpml("abc");

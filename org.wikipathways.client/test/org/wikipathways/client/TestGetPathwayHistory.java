@@ -40,11 +40,11 @@ public class TestGetPathwayHistory {
 
 	@Test
 	public void test() throws RemoteException {
-		String id = "WP4";
+		String id = "WP1";
 		Calendar c = Calendar.getInstance();
 		c.set(2011, 1, 1, 0, 0, 0);
 		
 		WSPathwayHistory hist = client.getPathwayHistory(id, c.getTime());
-		assertTrue(hist.getHistory(0).getRevision().equals("40411"));
+		assertTrue(hist.getHistory(0).getRevision().equals("41296"));
 	}
 }

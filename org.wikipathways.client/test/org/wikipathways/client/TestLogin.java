@@ -35,7 +35,7 @@ public class TestLogin {
 	private WikiPathwaysClient client;
 	
 	// define username and password in properties file:
-	// resources/user-properties.txt
+	// resources/user.properties
 	UserProperties props;
 	
 	@Before
@@ -48,7 +48,9 @@ public class TestLogin {
 	public void test() {
 		try {
 			String username = props.getProperty("username");
+			System.out.println(username);
 			String password = props.getProperty("password");
+			System.out.println(password);
 			client.login(username, password);
 		} catch (RemoteException e) {
 			fail("Login failed: " + e.getMessage());

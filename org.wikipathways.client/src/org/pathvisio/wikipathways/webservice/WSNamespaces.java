@@ -16,7 +16,7 @@
 
 package org.pathvisio.wikipathways.webservice;
 
-import org.jdom.Namespace;
+import org.jdom2.Namespace;
 
 /**
  * WP namespaces
